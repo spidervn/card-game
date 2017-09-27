@@ -127,3 +127,12 @@ void Solitare::printCard()
 		}
 	}
 }
+
+void Solitare::initSolitare()
+{
+	for (int i=0;i<10;i++) {
+		shuffle();
+	}
+
+	
+}
