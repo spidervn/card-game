@@ -12,9 +12,7 @@ private:
 
 	int card[CARD_NO];
 	char color[CARD_NO];
-
-	int tempMem[CARD_NO];
-	char tempChar[CARD_NO];
+	
 public:
 	Solitare();
 
