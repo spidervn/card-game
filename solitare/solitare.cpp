@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include "solitare.h"
 
 using namespace std;
 
@@ -57,19 +58,57 @@ void Solitare::shufflev2()
 {
 	/* 
 	 * Firstly; divide the 
-	 * 	Mix [0,dividePos) with [dividePos,end)
+	 * 		- Mix [0,dividePos) with [dividePos,end)
+	 * 		- How to mix method
 	 */
 
 	int dividePos = CARD_NO/2 + rand()*5;
+	int tempInt[CARD_NO];
+	char tempChar[CARD_NO];
 	
 	while (true)
 	{
-		/* card_no / 02; */
-		rand() * 5;
+		int index = 0;
+		for (int i=0;i<CARD_NO;i++) {
+			if (i >= dividePos && (dividePos+i) >= CARD_NO) {
+				break;
+			}
 
+			if (i < dividePos) {
+				tempInt[index] = card[i];
+				tempChar[index++] = color[i];	// Increase index after insert
+			}
+
+			if (dividePos + i <CARD_NO) {
+				tempInt[index] = card[dividePos+i];
+				tempChar[index++] = color[dividePos+i]; // Increase index after insert
+			}
+		}
 	}	
-
-
 }
 
-
+void Solitare::printCard()
+{
+	printf("New card: ");
+	for (int i=0;i<CARD_NO;i++) {
+		printf(" %d", card[i]);
+		switch (color[i]) 
+		{
+			case 1:
+				printf("BICH;");
+			break;
+			case 2:
+				printf("TEP;");
+			break;
+			case 3:
+				printf("RO;");
+			break;
+			case 4:
+				printf("CO;");
+			break;
+			default:
+				printf("INVALID;");
+			break;
+		}
+	}
+}

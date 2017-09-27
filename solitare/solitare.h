@@ -21,6 +21,8 @@ public:
 	void shuffle();
 	
 	void shufflev2();
+
+	void printCard();
 };
 
 #endif 
