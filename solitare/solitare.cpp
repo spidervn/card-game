@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "solitare.h"
+#include "util.h"
 
 using namespace std;
 
@@ -24,6 +25,23 @@ void Solitare::init()
 		}
 	}
 	printf("Finish INit \r\n");
+}
+
+TYPECARD Solitare::makeCard(int cardDeck, char& cardColor)
+{
+	TYPECARD type = 0;
+	int intColor = cardColorl
+	type = (cardDeck & 0xFF00) | (intColor << 16) ;
+
+	return type;
+}
+
+void Solitare::parseCard(TYPECARD cardType, int& cardDeck, char& cardColor)
+{
+	int intColor;
+	cardDeck = cardType & 0xFF00;
+	intColor = (cardType & 0x00FF) >> 16;
+	cardColor = intColor;
 }
 
 void Solitare::shuffle()
@@ -134,5 +152,82 @@ void Solitare::initSolitare()
 		shuffle();
 	}
 
-	
+	int rowNum = SOLITARE_BOARD_ROW;
+	int cardPos = 0;
+
+	for (int i=0;i<rowNum;i++) {
+		row_len[i] = (i+1);
+		row_open_pos[i] = i;	// Open a card at the top of stack 
+
+		for (int j=0;j<=i;j++) {
+			row[i][j] = makeCard(card[cardPos], color[cardPos++]);
+		}
+	}
+
+	reserve_len = 0;
+	while (cardPos < CARD_NO) {
+		reserve_card[reserve_len++] = makeCard(card[cardPos],color[cardPos++]);
+	}
+
+	for (int i=0;i<DECK_COLOR;i++) {
+		yield_len[i] = 0;	//Nothing yielded yet
+	}
+}
+
+void Solitare::play()
+{
+	// Find a Valid solutions that OK
+	//
+	//	Valid solution = 
+	//		=> Open A new card
+	//		=> Yield a new card 
+
+	// Find how to open a new card 
+	// Find a path
+	//	=> 
+	//		=> Path 
+	//			Build a graph that 
+	//			G(V,E)
+	//				e=(v1,v2) <=> v1 = one_state 
+	//								v2 = another state
+	//	Find the shortest path ?
+	//	
+	//	Data structure ?
+	//		v1 -> v2 -> v3 -> v4 -> v5
+	//		v6 -> v7 -> v8 -> v9 -> v10
+	//		
+	//	
+	//	
+
+	//	M1 => Each row => Find the next move 
+	//			Can move to another part ? 
+	//	
+	//	M => Each row => Finding the next move
+	// 
+	//	M => Each row => Finding the next move ? 
+	//	
+	//			=> Easiest move => Open the top of card => Move to the next 
+	//				=> Opening the top of the card => Move to the next ???
+	//				
+	//				Finding a path ? 
+	//				
+
+
+}
+
+// Is valid move from card1 to card2
+bool Solitare::validMove(TYPECARD card1, TYPECARD card2)
+{
+	int deck1, deck2;
+	char color1, color2;
+
+	parseCard(card1, deck1, color1);
+	parseCard(card2, deck2, color2);
+
+	/*  
+	 *	color1 && color2 
+	 * 		color1 && color2 trai dau <=> color1 == [0,1] && color2==[2,3]
+	 *		(color1-1.5) * (color2-1.5) < 0
+	 */
+	return (card2 == card1+1) && (sign(color1 - 1.5) != sign(color2-1.5));
 }
