@@ -9,6 +9,28 @@
 
 #define SOLITARE_BOARD_ROW 7 
 
+#include <vector> 
+
+typedef struct structCardAddress
+{
+	int addressType;	// Type = Board Game; Yielded; Reserve
+	TYPECARD cardValue;
+	int address01;		//	Address 01 (row; index; or deck_type) depends on what addressType is 
+	int address02;	
+
+} CARD_ADDRESS;
+
+typedef struct structSolitareSingleMove
+{
+	CARD_ADDRESS from;
+	CARD_ADDRESS to;
+} SOLITARE_SINGLE_MOVE;
+
+typedef struct structSolitareMove 
+{
+	std::vector<SOLITARE_SINGLE_MOVE> move;
+} SOLITARE_MOVE:
+
 class Solitare 
 {
 private:

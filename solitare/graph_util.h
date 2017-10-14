@@ -7,7 +7,7 @@
 
 int find_Path(int g_n, int[][] e)
 {
-
+	return 0;
 }
 
 
